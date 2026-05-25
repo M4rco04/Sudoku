@@ -1,62 +1,64 @@
 # Sudoku Solver - Constraint Satisfaction Problem (CSP)
 
-Projekt to implementacja narzędzia do rozwiązywania Sudoku w języku Python. Wykorzystuje ono modelowanie oparte na **CSP - Constraint Satisfaction Problem** oraz algorytm **Backtracking Search** (przeszukiwanie z nawrotami).
+This project is an implementation of a Sudoku solving tool in Python. It utilizes modeling based on the **CSP - Constraint Satisfaction Problem** and the **Backtracking Search** algorithm.
 
-Aby zoptymalizować proces rozwiązywania, w projekcie zaimplementowano następujące heurystyki:
+To optimize the solving process, the following heuristics have been implemented in the project:
 
-- **MRV (Minimum Remaining Values):** Wybiera w pierwszej kolejności puste pole (zmienną), dla którego pozostało najmniej dozwolonych wartości.
-- **Degree Heuristic:** Używana jako heurystyka rozstrzygająca przy remisach w MRV. Wybiera zmienną, która bierze udział w największej liczbie ograniczeń z innymi nieprzypisanymi zmiennymi.
-- **LCV (Least Constraining Value):** Porządkuje domeny wartości tak, aby w pierwszej kolejności sprawdzać liczby, które najmniej ograniczają możliwości wyboru dla sąsiednich, pustych pól.
+* **MRV (Minimum Remaining Values):** First selects the empty cell (variable) that has the fewest allowed values remaining.
+* **Degree Heuristic:** Used as a tie-breaker for MRV. It selects the variable that is involved in the largest number of constraints with other unassigned variables.
+* **LCV (Least Constraining Value):** Orders the value domains to first check the numbers that least restrict the available choices for neighboring empty cells.
 
 ---
 
-## 🛠 Wymagania
+## 🛠 Requirements
 
-Do uruchomienia projektu wymagany jest język **Python 3.x** oraz biblioteka **NumPy**.
+To run the project, **Python 3.x** and the **NumPy** library are required.
 
-Możesz zainstalować brakujące zależności za pomocą menedżera pakietów `pip`:
+You can install missing dependencies using the `pip` package manager:
 
 ```bash
 pip install numpy
+
 ```
 
 ---
 
-## 📂 Struktura Projektu
+## 📂 Project Structure
 
-Projekt został podzielony na moduły, aby zapewnić czytelność i łatwość utrzymania kodu:
+The project has been divided into modules to ensure code readability and maintainability:
 
-- `main.py` - Główny punkt wejścia do aplikacji. Odpowiada za parsowanie argumentów z linii poleceń i uruchamianie procesu rozwiązywania.
-- `algorithm/backtracking_search.py` - Implementacja algorytmu przeszukiwania z nawrotami (Backtracking). Odpowiada za proces znajdowania rozwiązania oraz renderowanie wyniku w konsoli.
-- `csp/csp.py` - Definicja problemu CSP. Zarządza dziedzinami (domenami), ograniczeniami (constraints) pomiędzy polami, weryfikuje spójność (consistency) oraz zawiera logikę dla heurystyk MRV i LCV.
-- `representation/board.py` - Reprezentacja planszy Sudoku. Odpowiada za wczytywanie danych z pliku tekstowego oraz udostępnia metody pomocnicze do indeksowania rzędów, kolumn i bloków 3x3.
+* `main.py` - The main entry point of the application. Responsible for parsing command-line arguments and starting the solving process.
+* `algorithm/backtracking_search.py` - Implementation of the Backtracking algorithm. Responsible for the process of finding the solution and rendering the result in the console.
+* `csp/csp.py` - Definition of the CSP problem. Manages domains, constraints between cells, verifies consistency, and contains the logic for the MRV and LCV heuristics.
+* `representation/board.py` - Representation of the Sudoku board. Responsible for loading data from a text file and providing helper methods for indexing rows, columns, and 3x3 blocks.
 
 ---
 
-## 🚀 Jak uruchomić
+## 🚀 How to Run
 
-Aby uruchomić solver, użyj pliku `main.py` podając jako argument flagę `-f` (lub `--file`) wraz z nazwą pliku tekstowego zawierającego planszę.
+To run the solver, use the `main.py` file, passing the `-f` (or `--file`) flag along with the name of the text file containing the board as an argument.
 
-**Ważne:** Zgodnie z założeniami projektu, pliki z planszami muszą znajdować się w katalogu `data/` w głównym folderze projektu.
+**Important:** According to the project assumptions, board files must be located in the `data/` directory within the main project folder.
 
-### Przykład użycia
+### Example Usage
 
 ```bash
 python main.py -f 04.txt
+
 ```
 
 ---
 
-## 📝 Format pliku wejściowego
+## 📝 Input File Format
 
-Plik tekstowy (np. `04.txt`) reprezentujący planszę powinien składać się z 9 linii.
+The text file (e.g., `04.txt`) representing the board should consist of 9 lines.
 
-Każda linia to 9 liczb oddzielonych pojedynczą spacją.
+Each line contains 9 numbers separated by a single space.
 
-- Liczby od `1` do `9` oznaczają z góry przypisane wartości.
-- `0` (zero) oznacza puste pole do rozwiązania.
+* Numbers from `1` to `9` represent pre-assigned values.
+* `0` (zero) represents an empty cell to be solved.
 
-### Przykładowy wygląd pliku
+### Example File Layout
 
 ```text
 2 0 4 0 0 0 0 0 5
@@ -68,13 +70,14 @@ Każda linia to 9 liczb oddzielonych pojedynczą spacją.
 0 9 0 0 0 0 0 6 2
 4 0 0 6 0 0 0 0 8
 0 1 0 0 0 8 0 0 0
+
 ```
 
 ---
 
-## 📊 Wynik działania
+## 📊 Output
 
-Po pomyślnym rozwiązaniu łamigłówki, program narysuje w konsoli kompletną planszę Sudoku podzieloną na siatkę 3x3, na przykład:
+After successfully solving the puzzle, the program will draw the complete Sudoku board in the console, divided into a 3x3 grid, for example:
 
 ```text
 |-------|-------|-------|
@@ -90,6 +93,7 @@ Po pomyślnym rozwiązaniu łamigłówki, program narysuje w konsoli kompletną 
 | 4 5 3 | 6 1 2 | 9 7 8 |
 | 6 1 2 | 7 9 8 | 4 5 3 |
 |-------|-------|-------|
+
 ```
 
-Jeśli dane Sudoku nie posiada rozwiązania, program wyświetli odpowiedni komunikat.
+If the given Sudoku data has no solution, the program will display an appropriate message.
